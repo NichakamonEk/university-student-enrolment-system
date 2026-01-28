@@ -1,0 +1,87 @@
+[Nicha Note]
+
+3 Classes: 1. Subject 2. Student 3. Database
+
+Data Store in Student.Data = JSON/Text File
+
+1. Suject
+    Store Subject Objects : id/ mark/ grade(use check_func)
+    1.1.1) from_dict : load data from dict return object
+    1.1.2) to_dict   : save object back to dict format (later to student.data)
+
+2. Student
+    Store Student Objects including : Name, Email, Pass, ID, list[subject] , Overall, Status
+    2.1.1) from_dict : load data from dict return object ** also include 1.1.1) here
+    2.1.2) to_dict   : save object back to dict format (later to student.data) ** also include 1.1.2) here
+
+    2.2) _recompute_overall_and_status() 
+
+
+3. Database
+    Store list of Student Objects
+    Manage everything: When open program, load data from JSON to Objects, ready to work
+    When add/delete/change : Always save back to the File - Student.data
+
+    3.1) load_students : When start the system > use 2.1.1) load data and transform to student objects/ if no value return blank.
+    3.2) save_students : use 2.1.2) save student objects back to dict then write back to the file(student.data).
+
+    Private functions;
+
+    3.3) _find_student : receive any student id > format 6 digit > search in student list > not found return None
+    3.4) _email_available : check used email or not > return True = available / False : used
+    3.5) _generate_unique_student_id : random 6 digit *check no duplicate > return new stu_id
+    3.6) _generate_unique_subject_id : random 3 digit * check no dup in student > return new subj_id
+
+    Public functions **main.py & controller.py pick code from here only**:
+
+    3.7) add_student: receive email, pass, name from user **Make sure both format are valid before calling this function!
+                    : use 3.4) _email_available if used -> return none.
+                    : then use 3.5) gen new stu_id
+                    : then create new student object : default = email, pw, name, [], id, 0.0, Fail
+                    : then append to student list
+                    : then 3.2) save back to student.data
+                    : show new_id
+    
+    3.8) change_password : receive student & new pass
+                        : use 3.3) find student id in list > print stu not found
+                        : then replace old pass with new pass
+                        : then 3.2) save back to student.data
+
+    3.9) enrol   : receive student_id
+                : use 3.3) find student in list > print stu not found
+                : then count subject if =4 show alert massage
+                : then use 3.6) gen new subj_id 
+                : then gen random mark
+                : then append to student object list -- subject list -- both subj_id and mark
+                : then 2.2) recal overall and status
+                : then 3.2) save back to student.data
+                : return massage
+
+    3.10) remove_suject  : receive student_id & subj_id
+                        : use 3.3) find student / print stu not found
+                        : need to translate to 3 digit format
+                        : count before delete
+                        : logic: keep only subj_id != target subj_id
+                        : if after used logic.. count remain the same, so its mean that no such subj_id in the list...> show subject not exist
+                        : else use 2.2) & 3.2)
+                        :return massage
+
+    3.11) list_subjects  : receive student_id
+                        : use 3.3)
+                        : if not found return blank else return subject list.
+
+    3.12) show_students  : got 3 options; 1.normal list, 2. group by grade 3. group pass/fail
+                        : If no student in the system . nothing to display
+                        : If choose 1 : stu name, id, email
+                        : If choose 2 : sort overall then get grade, return sorted list
+                        : else group pass fail
+
+    3.13) remove_student : receive student_id > if in list then remove & save to student.data
+    3.14) remove_all
+    3.15) check_db_email : (external) check if email availabe.
+
+    
+
+
+
+
