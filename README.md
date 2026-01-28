@@ -65,8 +65,7 @@ The system aims to support:
 
 ## Repository Contents
 - [`/src`](./src) — Source code for the student enrolment system and run instructions  
-- `/docs` — Requirement analysis and system design report  
-
+- [`Requirement-analysis-system-design-report.pdf`](./docs/Requirement-analysis-system-design-report.pdf) — Requirement analysis and system design report
 ---
 
 ## Notes
